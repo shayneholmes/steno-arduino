@@ -47,11 +47,16 @@
 
 #define DEBOUNCE_PERIOD 10
 
+const int ledPin = 13;
+
 /*
  * Setup IO and serial connections
  */
 void setup()
 {
+    // initialize the digital pin as an output.
+    pinMode(ledPin, OUTPUT);
+  
     // Initialize serial
     Serial.begin(BAUD);
 
@@ -185,6 +190,10 @@ void loop()
         memset(pressed_keys, 0, sizeof(pressed_keys));
         send_data   = 0;
         in_progress = 0;
+
+        digitalWrite(ledPin, HIGH);   // set the LED on
+        delay(100);                  // wait for a second
+        digitalWrite(ledPin, LOW);    // set the LED off
 
     } else {
         // Latch current state of all keys
