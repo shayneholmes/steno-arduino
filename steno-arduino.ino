@@ -49,10 +49,6 @@
 
 const int ledPin = 13;
 
-unsigned long blinkStopMillis = 0;
-
-const unsigned long durationOfBlink = 100;
-
 /*
  * Setup IO and serial connections
  */
@@ -177,6 +173,10 @@ void loop()
 
     // Debounce counter
     static int debounce_count;
+
+    // Blinking variables
+    static unsigned long blinkStopMillis = 0;
+    const unsigned long durationOfBlink = 100;
 
     int i;
     char pressed;
