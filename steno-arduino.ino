@@ -28,7 +28,7 @@
  * ||||||
  * xxxxxx (contacts facing up)
  *  \\\\\\_   Power +5V
- *   \\\\\_ 2 Test
+ *   \\\\\_ 1 Test
  *    \\\\_ 3 Shift load
  *     \\\_ 4 Serial out
  *      \\_ 5 Clock
@@ -39,7 +39,7 @@
 #define CLK      5
 #define DATA_IN  4
 #define LATCH_EN 3
-#define TEST_EN  2
+#define TEST_EN  1
 #define BAUD     115200
 
 #define ARRAY_SIZE(array) \
