@@ -49,6 +49,10 @@
 
 const int ledPin = 13;
 
+unsigned long blinkStopMillis = 0;
+
+const unsigned long durationOfBlink = 100;
+
 /*
  * Setup IO and serial connections
  */
@@ -191,9 +195,8 @@ void loop()
         send_data   = 0;
         in_progress = 0;
 
+        blinkStopMillis = millis() + durationOfBlink;
         digitalWrite(ledPin, HIGH);   // set the LED on
-        delay(100);                  // wait for a second
-        digitalWrite(ledPin, LOW);    // set the LED off
 
     } else {
         // Latch current state of all keys
@@ -236,6 +239,14 @@ void loop()
         // Return data to host when all keys have been released
         if (in_progress && !keys_down && (++debounce_count >= DEBOUNCE_PERIOD)) {
             send_data = 1;
+        }
+    }
+
+    if (blinkStopMillis) {
+        unsigned long currentMillis = millis();
+        if (currentMillis > blinkStopMillis) {
+            digitalWrite(ledPin, LOW);   // set the LED off
+            blinkStopMillis = 0;
         }
     }
 }
