@@ -45,6 +45,8 @@
 #define ARRAY_SIZE(array) \
     (sizeof(array) / sizeof(*array))
 
+#define DEBOUNCE_PERIOD 10
+
 /*
  * Setup IO and serial connections
  */
@@ -164,6 +166,9 @@ void loop()
     // Send data to host over serial
     static char send_data;
 
+    // Debounce counter
+    static int debounce_count;
+
     int i;
     char pressed;
     char keys_down;
@@ -215,8 +220,12 @@ void loop()
         // Make latch transparent again to capture next set of keystrokes
         digitalWrite(LATCH_EN, LOW);
 
+        if (keys_down) {
+            debounce_count = 0;
+        }
+
         // Return data to host when all keys have been released
-        if (in_progress && !keys_down) {
+        if (in_progress && !keys_down && (++debounce_count >= DEBOUNCE_PERIOD)) {
             send_data = 1;
         }
     }
